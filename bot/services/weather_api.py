@@ -5,7 +5,9 @@ import os
 async def get_weather(city: str) -> str:
     """Получение погоды через OpenWeatherMap"""
     api_key = os.getenv('WEATHER_API_KEY', 'demo_key')
-    url = f"http: //api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=ru"
+    
+    # ИСПРАВЛЕННЫЙ URL - убрал лишние слеши
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=ru"
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
@@ -14,5 +16,7 @@ async def get_weather(city: str) -> str:
                 temp = data['main']['temp']
                 desc = data['weather'][0]['description']
                 return f"Погода в {city}: {temp}°C, {desc}"
-            else:
+            elif response.status == 404:
                 return "Город не найден"
+            else:
+                return f"Ошибка API: {response.status}"

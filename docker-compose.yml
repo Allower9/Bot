@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   telegram-bot:
-    image: ${DOCKER_USERNAME}/telegram-bot:latest
+    image: allower99/telegram-bot:latest
     container_name: telegram-bot
     restart: unless-stopped
     env_file:

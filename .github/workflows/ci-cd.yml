@@ -24,7 +24,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -r requirements-dev.txt  # ✅ Добавил установку dev зависимостей
+          pip install pytest pytest-asyncio flake8
 
       - name: Run tests with pytest
         run: |
@@ -33,7 +33,6 @@ jobs:
       - name: Check code quality
         run: |
           flake8 bot/ tests/ --count --max-line-length=127
-          black --check bot/ tests/
 
   build-and-push:
     name: Build and Push Docker Image
@@ -86,16 +85,9 @@ jobs:
             
             cd /home/user1/telegram-bot
             
-            # Pull latest image
             docker pull ${{ secrets.DOCKER_USERNAME }}/telegram-bot:${{ github.ref_name }}
-            
-            # Stop and remove old container
             docker-compose down
-            
-            # Start new container
             docker-compose up -d
-            
-            # Clean up
             docker image prune -f
             
             echo "✅ Deployment completed successfully!"

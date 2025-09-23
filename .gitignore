@@ -1,0 +1,12 @@
+# Virtual environment
+venv/
+.env
+*.pyc
+__pycache__/
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+*.log
+logs/

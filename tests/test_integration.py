@@ -1,14 +1,12 @@
-import os
-import pytest
 from unittest.mock import patch, MagicMock
-from bot.main import create_app, main
+from bot.main import main
 
 
 class TestIntegration:
     """Интеграционные тесты"""
 
-    @patch("bot.main.Application.run_polling")
-    @patch("bot.main.create_app")
+    @patch('bot.main.Application.run_polling')
+    @patch('bot.main.create_app')
     def test_main_function(self, mock_create_app, mock_run_polling):
         """Тест главной функции"""
         mock_app = MagicMock()
@@ -26,19 +24,16 @@ class TestErrorHandling:
 
     def test_logging_import(self):
         """Тест что логирование импортируется корректно"""
-        # Просто проверяем что модуль импортируется без ошибок
         from bot.main import logger
-
         assert logger is not None
-        assert logger.name == "bot.main"
+        assert logger.name == 'bot.main'
 
 
 class TestEdgeCases:
     """Тесты крайних случаев"""
 
-    @patch.dict("os.environ", {"TELEGRAM_BOT_TOKEN": "test", "WEATHER_API_KEY": "test"})
+    @patch.dict('os.environ', {'TELEGRAM_BOT_TOKEN': 'test', 'WEATHER_API_KEY': 'test'})
     def test_environment_variables(self):
         """Тест переменных окружения"""
         from bot.services.weather_api import get_weather
-
         assert callable(get_weather)

@@ -54,7 +54,7 @@ jobs:
       
       - name: Run E2E Tests
         run: # Запуск e2e тестов
-        if: success()
+       if: always()  #  Выполнится в любом случае
       
       - name: Generate Reports
         run: # Генерация отчетов
